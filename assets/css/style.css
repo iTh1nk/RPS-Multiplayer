@@ -1,0 +1,29 @@
+html {
+    background-image: url(../images/bg.jpg);
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    min-width: 100%;
+    min-height: 100%;
+}
+
+body {
+    background-image: url(../images/bg.jpg);
+    color: white;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    min-width: 100%;
+    min-height: 100%;
+}
+
+nav {
+    margin-bottom: 30px; 
+    background-color: black;
+}
+
+.brand-logo {
+    font-family: 'Hanalei Fill', cursive;
+}
