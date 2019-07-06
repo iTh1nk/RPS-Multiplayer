@@ -15,7 +15,7 @@ var database = firebase.database();
 
 $(document).ready(function () {
 
-    $("#joinOwn").on("clcik", function () {
+    $("#joinOwn").on("click", function () {
         var name = "player1";
         var rps = "";
 
