@@ -25,6 +25,13 @@ $(document).ready(function () {
             win: 0,
             loss: 0,
         })
+
+        database.ref("/player1").on("value", function (snapshot) {
+            console.log(snapshot);
+            var name = snapshot.val().name;
+            $("#player1").text(name)
+            $("#joinOwn").html("");
+        })
     })
 
     $("#joinOpp").on("click", function () {
@@ -37,17 +44,16 @@ $(document).ready(function () {
             win: 0,
             loss: 0,
         })
+
+        database.ref("/player2").on("value", function (snapshot) {
+            console.log(snapshot);
+            var name = snapshot.val().name;
+            $("#player2").text(name)
+            $("#joinOpp").html("");
+        })
     })
 
-    database.ref("/player1").on("value", function(snapshot) {
-        console.log(snapshot);
 
-        $("#joinOwn").html("");
-    })
 
-    database.ref("/player2").on("value", function(snapshot) {
-        console.log(snapshot);
 
-        $("#joinOpp").html("");
-    })
 })
