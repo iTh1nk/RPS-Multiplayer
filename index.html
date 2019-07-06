@@ -25,7 +25,7 @@
 
     <nav>
         <div class="nav-wrapper">
-            <a href="#" class="brand-logo">&nbsp;&nbsp; RPS Game Room</a>
+            <a href="#" class="brand-logo" style="margin-left: 40%;">&nbsp;&nbsp; RPS Game Room</a>
             <!-- <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><a href="sass.html">Sass</a></li>
                 <li><a href="badges.html">Components</a></li>
@@ -40,7 +40,7 @@
             <div class="col s12 m4">
                 <div class="card green darken-1">
                     <div class="card-content white-text">
-                        <span class="card-title">Plyer1 (You)</span>
+                        <span class="card-title">Plyer1</span>
                         <p>WIN: <div id="winCounter1"></div> LOSS: <div id="loseCounter1"></div>
                         </p>
                     </div>
@@ -56,7 +56,7 @@
             <div class="col s12 m4">
                 <div class="card red darken-1">
                     <div class="card-content white-text">
-                        <span class="card-title">Player2 (Opp.)</span>
+                        <span class="card-title">Player2</span>
                         <p>WIN: <div id="winCounter2"></div> LOSS: <div id="loseCounter2"></div>
                         </p>
                     </div>
@@ -69,9 +69,13 @@
         </div>
 
         <div class="row">
-            <div class="col s12 m4"></div>
-            <div class="col s12 m4">
-                <div class="card-panel ">
+            <div class="col s12 m3">
+                    <a href="#" onMouseOver="this.className='highlightChooseOwn'" onMouseOut="this.className=''"><img class="rpsChoose" src="./assets/images/rock.png"></a>
+                    <a href="#" onMouseOver="this.className='highlightChooseOwn'" onMouseOut="this.className=''"><img class="rpsChoose" src="./assets/images/paper.png"></a>
+                    <a href="#" onMouseOver="this.className='highlightChooseOwn'" onMouseOut="this.className=''"><img class="rpsChoose" src="./assets/images/scissor.png"></a>
+            </div>
+            <div class="col s12 m3" style="text-align: center;">
+                <div class="card-panel yellow">
                     <span class="black-text">
                         <div style="color: white">
                             <img src="./assets/images/rock.png">
@@ -79,7 +83,20 @@
                     </span>
                 </div>
             </div>
-            <div class="col s12 m4"></div>
+            <div class="col s12 m3" style="text-align: center;">
+                <div class="card-panel yellow">
+                    <span class="black-text">
+                        <div style="color: white">
+                            <img src="./assets/images/rock.png">
+                        </div>
+                    </span>
+                </div>
+            </div>
+            <div class="col s12 m3">
+                <a href="#" onMouseOver="this.className='highlightChooseOpp'" onMouseOut="this.className=''"><img class="rpsChoose" src="./assets/images/rock.png"></a>
+                <a href="#" onMouseOver="this.className='highlightChooseOpp'" onMouseOut="this.className=''"><img class="rpsChoose" src="./assets/images/paper.png"></a>
+                <a href="#" onMouseOver="this.className='highlightChooseOpp'" onMouseOut="this.className=''"><img class="rpsChoose" src="./assets/images/scissor.png"></a>
+            </div>
         </div>
 
         <div class="row">
@@ -88,7 +105,8 @@
                 <label for="input_text" style="color: darkblue;">Input text here</label>
             </div>
             <div class="col s12 m2">
-                <button class="btn waves-effect waves-green white" style="color: black;" type="submit" name="action">Send</button>
+                <button class="btn waves-effect waves-green white" style="color: black;" type="submit"
+                    name="action">Send</button>
             </div>
             <div class="row">
                 <div id="chatArea">

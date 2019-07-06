@@ -27,3 +27,16 @@ nav {
 .brand-logo {
     font-family: 'Hanalei Fill', cursive;
 }
+
+.rpsChoose {
+    width: 70px;
+    height: 70px;
+}
+
+.highlightChooseOpp {
+    background-color: red;
+}
+
+.highlightChooseOwn {
+    background-color: lightgreen;
+}
