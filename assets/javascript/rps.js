@@ -46,14 +46,14 @@ $(document).ready(function () {
         console.log(snapshot);
         var name = snapshot.val().name;
         $("#player1").text(name)
-        $("#joinOwn").html("");
+        $("#joinOwn").html("Ready!");
     })
 
     database.ref("/player2").on("value", function (snapshot) {
         console.log(snapshot);
         var name = snapshot.val().name;
         $("#player2").text(name)
-        $("#joinOpp").html("");
+        $("#joinOpp").html("Ready!");
     })
 
     $("#infoClear").on("click", function() {
