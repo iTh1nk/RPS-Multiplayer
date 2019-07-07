@@ -13,9 +13,13 @@ firebase.initializeApp(firebaseConfig);
 
 var database = firebase.database();
 
+var spCounter1 = 0;
+var spCounter2 = 0;
+
 $(document).ready(function () {
 
     $("#joinOwn").on("click", function () {
+        event.preventDefault();
         var name = "player1";
         var rps = "";
 
@@ -29,6 +33,7 @@ $(document).ready(function () {
     })
 
     $("#joinOpp").on("click", function () {
+        event.preventDefault();
         var name = "player2";
         var rps = "";
 
@@ -39,24 +44,30 @@ $(document).ready(function () {
             loss: 0,
         })
 
-        
     })
 
     database.ref("/player1").on("value", function (snapshot) {
-        console.log(snapshot);
-        var name = snapshot.val().name;
-        $("#player1").text(name)
-        $("#joinOwn").html("Ready!");
+        console.log(snapshot.val());
+        if (snapshot.child("name").exists()) {
+            $("#displayOwn").attr("style", "visibility: visible");
+            var name = snapshot.val().name;
+            $("#player1").text(name)
+            $("#joinOwn").html("Ready!");
+        }
     })
 
     database.ref("/player2").on("value", function (snapshot) {
-        console.log(snapshot);
-        var name = snapshot.val().name;
-        $("#player2").text(name)
-        $("#joinOpp").html("Ready!");
+        console.log(snapshot.val());
+        if (snapshot.child("name").exists()) {
+            $("#displayOpp").attr("style", "visibility: visible");
+            var name = snapshot.val().name;
+            $("#player2").text(name)
+            $("#joinOpp").html("Ready!");
+        }
     })
 
-    $("#infoClear").on("click", function() {
+
+    $("#infoClear").on("click", function () {
         database.ref().remove();
         location.reload();
     })

@@ -23,8 +23,8 @@
 <body>
     <nav>
         <div class="nav-wrapper">
-            <a href="#" class="brand-logo" style="margin-left: 40%;">&nbsp;&nbsp; RPS Game Room</a>
-            <button class="btn" style="margin-left: 80%;" id="infoClear">Clear</button>
+            <a href="#" class="brand-logo" style="margin-left: 40%;" id="infoClear">&nbsp;&nbsp; RPS Game Room</a>
+            <!-- <button class="btn" style="margin-left: 80%;" id="infoClear">Clear</button> -->
             <!-- <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><a href="sass.html">Sass</a></li>
                 <li><a href="badges.html">Components</a></li>
@@ -64,7 +64,7 @@
         </div>
 
         <div class="row">
-            <div class="col s12 m3">
+            <div class="col s12 m3" id="displayOwn" style="visibility: hidden;">
                 <a href="#" onMouseOver="this.className='highlightChooseOwn'" onMouseOut="this.className=''"><img
                         id="rockOwn" class="rpsChoose" src="./assets/images/rock.png"></a>
                 <a href="#" onMouseOver="this.className='highlightChooseOwn'" onMouseOut="this.className=''"><img
@@ -76,7 +76,7 @@
                 <div class="card-panel yellow">
                     <span class="black-text">
                         <div style="color: white" class="imgRpsPlay" id="rpsPlayOwn">
-                            <img src="./assets/images/rock.png" class="imgRpsPlay">
+                            <!-- <img src="./assets/images/rock.png" class="imgRpsPlay"> -->
                         </div>
                     </span>
                 </div>
@@ -85,12 +85,12 @@
                 <div class="card-panel yellow">
                     <span class="black-text">
                         <div style="color: white" class="imgRpsPlay" id="rpsPlayOpp">
-                            <img src="./assets/images/rock.png" class="imgRpsPlay">
+                            <!-- <img src="./assets/images/rock.png" class="imgRpsPlay"> -->
                         </div>
                     </span>
                 </div>
             </div>
-            <div class="col s12 m3">
+            <div class="col s12 m3" id="displayOpp" style="visibility: hidden;">
                 <a href="#" onMouseOver="this.className='highlightChooseOpp'" onMouseOut="this.className=''"><img
                         id="rockOpp" class="rpsChoose" src="./assets/images/rock.png"></a>
                 <a href="#" onMouseOver="this.className='highlightChooseOpp'" onMouseOut="this.className=''"><img
