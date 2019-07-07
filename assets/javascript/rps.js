@@ -58,6 +58,7 @@ $(document).ready(function () {
 
     $("#infoClear").on("click", function() {
         database.ref().remove();
+        location.reload();
     })
 
 })
