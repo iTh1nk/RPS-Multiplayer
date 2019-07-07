@@ -16,6 +16,17 @@ var database = firebase.database();
 var spCounter1 = 0;
 var spCounter2 = 0;
 
+var rpsRockOwn = "<img src='./assets/images/rock.png' class='imgRpsPlay'>";
+var rpsPaperOwn = "<img src='./assets/images/paper.png' class='imgRpsPlay'>";
+var rpsScissorOwn = "<img src='./assets/images/scissor.png' class='imgRpsPlay'>";
+var rpsRockOpp = "<img src='./assets/images/rock.png' class='imgRpsPlay'>";
+var rpsPaperOpp = "<img src='./assets/images/paper.png' class='imgRpsPlay'>";
+var rpsScissorOpp = "<img src='./assets/images/scissor.png' class='imgRpsPlay'>";
+
+var winloseDecider = function() {
+    
+}
+
 $(document).ready(function () {
 
     $("#joinOwn").on("click", function () {
@@ -46,6 +57,16 @@ $(document).ready(function () {
 
     })
 
+    $("#rockOwn").on("click", function() {
+        $("#rpsPlayOwn").html(rpsRockOwn);
+    })
+    $("#paperOwn").on("click", function() {
+        $("#rpsPlayOwn").html(rpsPaperOwn);
+    })
+    $("#scissorOwn").on("click", function() {
+        $("#rpsPlayOwn").html(rpsScissorOwn);
+    })
+
     database.ref("/player1").on("value", function (snapshot) {
         console.log(snapshot.val());
         if (snapshot.child("name").exists()) {
@@ -66,6 +87,15 @@ $(document).ready(function () {
         }
     })
 
+    database.ref().on("child_removed", function(snapshot) {
+        var buttonBack = "<a class='waves-effect waves-red white btn' style='color: black;'>JOIN</a>"
+        $("#displayOwn").attr("style", "visibility: hidden");
+        $("#displayOpp").attr("style", "visibility: hidden");
+        $("#player1").text("Waiting...")
+        $("#joinOwn").html(buttonBack);
+        $("#player2").text("Waiting...")
+        $("#joinOpp").html(buttonBack);
+    })
 
     $("#infoClear").on("click", function () {
         database.ref().remove();
