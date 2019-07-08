@@ -13,8 +13,16 @@ firebase.initializeApp(firebaseConfig);
 
 var database = firebase.database();
 
-var spCounter1 = 0;
-var spCounter2 = 0;
+var spPlayCounter1 = 0;
+var spPlayCounter2 = 0;
+
+var playedMarker1 = 0;
+var playedMarker2 = 0;
+
+var winCounterOwn = 0;
+var loseCounterOwn = 0;
+var winCounterOpp = 0;
+var loseCounterOpp = 0;
 
 var rpsRockOwn = "<img src='./assets/images/rock.png' class='imgRpsPlay'>";
 var rpsPaperOwn = "<img src='./assets/images/paper.png' class='imgRpsPlay'>";
@@ -23,8 +31,65 @@ var rpsRockOpp = "<img src='./assets/images/rock.png' class='imgRpsPlay'>";
 var rpsPaperOpp = "<img src='./assets/images/paper.png' class='imgRpsPlay'>";
 var rpsScissorOpp = "<img src='./assets/images/scissor.png' class='imgRpsPlay'>";
 
-var winloseDecider = function() {
-    
+var winloseDecider = function () {
+    if (playedMarker1 === "rock" && playedMarker2 === "rock") {
+        $("#playResult").html("Tied!");
+        $("#rpsPlayOwn").html(rpsRockOwn);
+        $("#rpsPlayOpp").html(rpsRockOpp);
+    }
+    if (playedMarker1 === "rock" && playedMarker2 === "paper") {
+        $("#playResult").html("Player2 Won!");
+        winCounterOpp++;
+        $("#winCounter2").html(winCounterOpp);
+        $("#loseCounter1").html(winCounterOpp);
+        $("#rpsPlayOwn").html(rpsRockOwn);
+        $("#rpsPlayOpp").html(rpsPaperOpp);
+    }
+    if (playedMarker1 === "rock" && playedMarker2 === "scissor") {
+        $("#playResult").html("Player1 Won!");
+        winCounterOwn++
+        $("#rpsPlayOwn").html(rpsRockOwn);
+        $("#rpsPlayOpp").html(rpsScissorOpp);
+    }
+    if (playedMarker1 === "paper" && playedMarker2 === "paper") {
+        $("#playResult").html("Tied!");
+        $("#rpsPlayOwn").html(rpsPaperOwn);
+        $("#rpsPlayOpp").html(rpsPaperOpp);
+    }
+    if (playedMarker1 === "paper" && playedMarker2 === "scissor") {
+        $("#playResult").html("Player2 Won!");
+        winCounterOpp++;
+        $("#rpsPlayOwn").html(rpsPaperOwn);
+        $("#rpsPlayOpp").html(rpsScissorOpp);
+    }
+    if (playedMarker1 === "scissor" && playedMarker2 === "scissor") {
+        $("#playResult").html("Tied!");
+        $("#rpsPlayOwn").html(rpsScissorOwn);
+        $("#rpsPlayOpp").html(rpsScissorOpp);
+    }
+    if (playedMarker1 === "paper" && playedMarker2 === "rock") {
+        $("#playResult").html("Player1 Won!");
+        winCounterOwn++
+        $("#rpsPlayOwn").html(rpsPaperOwn);
+        $("#rpsPlayOpp").html(rpsRockOpp);
+    }
+    if (playedMarker1 === "scissor" && playedMarker2 === "paper") {
+        $("#playResult").html("Player1 Won!");
+        winCounterOwn++
+        $("#rpsPlayOwn").html(rpsScissorOwn);
+        $("#rpsPlayOpp").html(rpsPaperOpp);
+    }
+    if (playedMarker1 === "scissor" && playedMarker2 === "rock") {
+        $("#playResult").html("Player2 Won!");
+        winCounterOpp++;
+        $("#rpsPlayOwn").html(rpsScissorOwn);
+        $("#rpsPlayOpp").html(rpsRockOpp);
+    }
+}
+
+var resetRound = function () {
+    spPlayCounter1 = 0;
+    spPlayCounter2 = 0;
 }
 
 $(document).ready(function () {
@@ -57,14 +122,54 @@ $(document).ready(function () {
 
     })
 
-    $("#rockOwn").on("click", function() {
-        $("#rpsPlayOwn").html(rpsRockOwn);
+    $("#rockOwn").on("click", function () {
+        spPlayCounter1++;
+        playedMarker1 = "rock";
+        if (spPlayCounter1 === spPlayCounter2) {
+            winloseDecider();
+            resetRound();
+        }
     })
-    $("#paperOwn").on("click", function() {
-        $("#rpsPlayOwn").html(rpsPaperOwn);
+    $("#paperOwn").on("click", function () {
+        spPlayCounter1++;
+        playedMarker1 = "paper";
+        if (spPlayCounter1 === spPlayCounter2) {
+            winloseDecider();
+            resetRound();
+        }
     })
-    $("#scissorOwn").on("click", function() {
-        $("#rpsPlayOwn").html(rpsScissorOwn);
+    $("#scissorOwn").on("click", function () {
+        spPlayCounter1++;
+        playedMarker1 = "scissor";
+        if (spPlayCounter1 === spPlayCounter2) {
+            winloseDecider();
+            resetRound();
+        }
+    })
+
+    $("#rockOpp").on("click", function () {
+        spPlayCounter2++;
+        playedMarker2 = "rock";
+        if (spPlayCounter2 === spPlayCounter1) {
+            winloseDecider();
+            resetRound();
+        }
+    })
+    $("#paperOpp").on("click", function () {
+        spPlayCounter2++;
+        playedMarker2 = "paper";
+        if (spPlayCounter2 === spPlayCounter1) {
+            winloseDecider();
+            resetRound();
+        }
+    })
+    $("#scissorOpp").on("click", function () {
+        spPlayCounter2++;
+        playedMarker2 = "scissor";
+        if (spPlayCounter2 === spPlayCounter1) {
+            winloseDecider();
+            resetRound();
+        }
     })
 
     database.ref("/player1").on("value", function (snapshot) {
@@ -87,7 +192,7 @@ $(document).ready(function () {
         }
     })
 
-    database.ref().on("child_removed", function(snapshot) {
+    database.ref().on("child_removed", function (snapshot) {
         var buttonBack = "<a class='waves-effect waves-red white btn' style='color: black;'>JOIN</a>"
         $("#displayOwn").attr("style", "visibility: hidden");
         $("#displayOpp").attr("style", "visibility: hidden");
