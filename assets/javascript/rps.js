@@ -33,6 +33,7 @@ var rpsScissorOpp = "<img src='./assets/images/scissor.png' class='imgRpsPlay'>"
 
 var winloseDecider = function () {
 
+
     if (playedMarker1 === "rock" && playedMarker2 === "rock") {
         $("#playResult").html("Tied!")
         database.ref("/player1").update({
@@ -40,7 +41,7 @@ var winloseDecider = function () {
             rpsImg: rpsRockOwn,
         })
         database.ref("/player2").update({
-            rps: "rock", 
+            rps: "rock",
             rpsImg: rpsRockOpp,
         })
     }
@@ -54,7 +55,7 @@ var winloseDecider = function () {
             loss: winCounterOpp,
         })
         database.ref("/player2").update({
-            rps: "paper", 
+            rps: "paper",
             rpsImg: rpsRockOpp,
             win: winCounterOpp,
             loss: winCounterOwn,
@@ -70,7 +71,7 @@ var winloseDecider = function () {
             loss: winCounterOpp,
         })
         database.ref("/player2").update({
-            rps: "scissor", 
+            rps: "scissor",
             rpsImg: rpsScissorOpp,
             win: winCounterOpp,
             loss: winCounterOwn,
@@ -83,7 +84,7 @@ var winloseDecider = function () {
             rpsImg: rpsPaperOwn,
         })
         database.ref("/player2").update({
-            rps: "paper", 
+            rps: "paper",
             rpsImg: rpsPaperOpp,
         })
     }
@@ -97,7 +98,7 @@ var winloseDecider = function () {
             loss: winCounterOpp,
         })
         database.ref("/player2").update({
-            rps: "scissor", 
+            rps: "scissor",
             rpsImg: rpsScissorOpp,
             win: winCounterOpp,
             loss: winCounterOwn,
@@ -110,7 +111,7 @@ var winloseDecider = function () {
             rpsImg: rpsScissorOwn,
         })
         database.ref("/player2").update({
-            rps: "scissor", 
+            rps: "scissor",
             rpsImg: rpsScissorOpp,
         })
     }
@@ -124,7 +125,7 @@ var winloseDecider = function () {
             loss: winCounterOpp,
         })
         database.ref("/player2").update({
-            rps: "rock", 
+            rps: "rock",
             rpsImg: rpsRockOpp,
             win: winCounterOpp,
             loss: winCounterOwn,
@@ -140,7 +141,7 @@ var winloseDecider = function () {
             loss: winCounterOpp,
         })
         database.ref("/player2").update({
-            rps: "paper", 
+            rps: "paper",
             rpsImg: rpsPaperOpp,
             win: winCounterOpp,
             loss: winCounterOwn,
@@ -156,7 +157,7 @@ var winloseDecider = function () {
             loss: winCounterOpp,
         })
         database.ref("/player2").update({
-            rps: "rock", 
+            rps: "rock",
             rpsImg: rpsRockOpp,
             win: winCounterOpp,
             loss: winCounterOwn,
@@ -166,10 +167,10 @@ var winloseDecider = function () {
 
 var resetRound = function () {
     database.ref("/player1").update({
-        
+
     })
     database.ref("/player2").update({
-        
+
     })
     spPlayCounter1 = 0;
     spPlayCounter2 = 0;
@@ -206,16 +207,18 @@ $(document).ready(function () {
     $("#rockOwn").on("click", function () {
         spPlayCounter1++;
         playedMarker1 = "rock";
-        
-        if (spPlayCounter1 === spPlayCounter2) {
-            winloseDecider();
-            resetRound();
-        }
+        database.ref("/player1").update({
+            spPlayCounter1: spPlayCounter1,
+        })
+        // if (spPlayCounter1 === spPlayCounter2) {
+        //     winloseDecider();
+        //     resetRound();
+        // }
     })
     $("#paperOwn").on("click", function () {
         spPlayCounter1++;
         playedMarker1 = "paper";
-        
+
         if (spPlayCounter1 === spPlayCounter2) {
             winloseDecider();
             resetRound();
@@ -224,7 +227,7 @@ $(document).ready(function () {
     $("#scissorOwn").on("click", function () {
         spPlayCounter1++;
         playedMarker1 = "scissor";
-        
+
         if (spPlayCounter1 === spPlayCounter2) {
             winloseDecider();
             resetRound();
@@ -242,10 +245,13 @@ $(document).ready(function () {
     $("#paperOpp").on("click", function () {
         spPlayCounter2++;
         playedMarker2 = "paper";
-        if (spPlayCounter2 === spPlayCounter1) {
-            winloseDecider();
-            resetRound();
-        }
+        database.ref("/player2").update({
+            spPlayCounter1: spPlayCounter1,
+        })
+        // if (spPlayCounter2 === spPlayCounter1) {
+        //     winloseDecider();
+        //     resetRound();
+        // }
     })
     $("#scissorOpp").on("click", function () {
         spPlayCounter2++;
@@ -257,14 +263,23 @@ $(document).ready(function () {
     })
 
     //Chat box
-    $("#submit").on("click", function() {
+    $("#submit").on("click", function () {
         var input = $("#input_text").val();
         database.ref("/chat").push({
             input: input,
         })
         $("#input_text").val("");
     })
-
+    //all palyer firebase standby
+    database.ref().on("value", function (snapshot) {
+        spPlayCounter1 = snapshot.val().player1.spPlayCounter1;
+        spPlayCounter2 = snapshot.val().player2.spPlayCounter2;
+        if (spPlayCounter1 === spPlayCounter2) {
+            winloseDecider();
+            resetRound();
+        }
+    })
+    //player1 firebase standby
     database.ref("/player1").on("value", function (snapshot) {
         winCounterOwn = snapshot.val().win;
         if (snapshot.child("name").exists()) {
@@ -276,8 +291,9 @@ $(document).ready(function () {
             $("#winCounter1").html(snapshot.val().win)
             $("#loseCounter1").html(snapshot.val().loss)
         }
+        
     })
-
+    //player2 firebase stanby
     database.ref("/player2").on("value", function (snapshot) {
         winCounterOpp = snapshot.val().win;
         if (snapshot.child("name").exists()) {
@@ -290,14 +306,14 @@ $(document).ready(function () {
             $("#loseCounter2").html(snapshot.val().loss);
         }
     })
-
-    database.ref("/chat").on("child_added", function(childSnapshot) {
+    //chat box firebase standby
+    database.ref("/chat").on("child_added", function (childSnapshot) {
         var trTag = $("<tr>").append(
             $("<td>").text(childSnapshot.val().input)
         )
         $("#tbody").prepend(trTag);
     })
-
+    //reset all html tag after database erased
     database.ref().on("child_removed", function (snapshot) {
         var buttonBack = "<a class='waves-effect waves-red white btn' style='color: black;'>JOIN</a>"
         $("#displayOwn").attr("style", "visibility: hidden");
@@ -308,7 +324,7 @@ $(document).ready(function () {
         $("#joinOpp").html(buttonBack);
         $("")
     })
-
+    //eastern egg to erase whole firebase data
     $("#infoClear").on("click", function () {
         database.ref().remove();
         location.reload();
