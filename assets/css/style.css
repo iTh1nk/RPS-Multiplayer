@@ -45,3 +45,9 @@ nav {
 .highlightChooseOwn {
     background-color: lightgreen;
 }
+
+#playResult {
+    text-align: center; 
+    padding: 10%;
+    font-size: 30px
+}
