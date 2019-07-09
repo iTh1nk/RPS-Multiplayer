@@ -522,11 +522,17 @@ $(document).ready(function () {
         var buttonBack = "<a class='waves-effect waves-red white btn' style='color: black;'>JOIN</a>"
         $("#displayOwn").attr("style", "visibility: hidden");
         $("#displayOpp").attr("style", "visibility: hidden");
-        $("#player1").text("Waiting...")
+        $("#player1").text("Waiting...");
         $("#joinOwn").html(buttonBack);
-        $("#player2").text("Waiting...")
+        $("#player2").text("Waiting...");
         $("#joinOpp").html(buttonBack);
-        $("")
+        $("#winCounter1").html("");
+        $("#winCounter2").html("");
+        $("#loseCounter1").html("");
+        $("#loseCounter2").html("");
+        $("#rpsPlayOwn").html("");
+        $("#rpsPlayOpp").html("");
+        $("#playResult").html("");
     })
     //eastern egg to erase whole firebase data
     $("#infoClear").on("click", function () {
