@@ -262,6 +262,7 @@ $(document).ready(function () {
         database.ref("/chat").push({
             input: input,
         })
+        $("#input_text").val("");
     })
 
     database.ref("/player1").on("value", function (snapshot) {
