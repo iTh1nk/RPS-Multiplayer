@@ -34,13 +34,14 @@
     </nav>
 
     <div class="container">
-        
+
         <div class="row">
             <div class="col s12 m4">
                 <div class="card green darken-1">
                     <div class="card-content white-text">
                         <span class="card-title" id="player1">Waiting...</span>
-                        <p>WINs: <div id="winCounter1"></div> LOSSes: <div id="loseCounter1"></div>
+                        <p>
+                            WINs: <div id="winCounter1"></div> LOSSes: <div id="loseCounter1"></div>
                         </p>
                     </div>
                     <div class="card-action" id="joinOwn">
@@ -53,7 +54,8 @@
                 <div class="card red darken-1">
                     <div class="card-content white-text">
                         <span class="card-title" id="player2">Waiting...</span>
-                        <p>WINs: <div id="winCounter2"></div> LOSSes: <div id="loseCounter2"></div>
+                        <p>
+                            WINs: <div id="winCounter2"></div> LOSSes: <div id="loseCounter2"></div>
                         </p>
                     </div>
                     <div class="card-action" id="joinOpp">
@@ -102,26 +104,18 @@
 
         <div class="row">
             <div class="input-field col s12 m10">
-                <input id="input_text" type="text" data-length="30">
+                <input id="input_text" type="text" data-length="60">
                 <label for="input_text" style="color: darkblue;">Input text here</label>
             </div>
             <div class="col s12 m2">
                 <button class="btn waves-effect waves-green white" style="color: black;" type="submit"
-                    name="action">Send</button>
+                    name="action" id="submit">Send</button>
             </div>
             <div class="row">
                 <div id="chatArea">
                     <table class="highlight" style="color: black; background-color: white;">
-                        <tbody>
-                            <tr>
-                                <td>Alvin</td>
-                            </tr>
-                            <tr>
-                                <td>Alan</td>
-                            </tr>
-                            <tr>
-                                <td>Jonathan</td>
-                            </tr>
+                        <tbody id="tbody">
+                            
                         </tbody>
                     </table>
                 </div>

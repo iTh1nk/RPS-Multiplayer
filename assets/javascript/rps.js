@@ -256,6 +256,14 @@ $(document).ready(function () {
         }
     })
 
+    //Chat box
+    $("#submit").on("click", function() {
+        var input = $("#input_text").val();
+        database.ref("/chat").push({
+            input: input,
+        })
+    })
+
     database.ref("/player1").on("value", function (snapshot) {
         winCounterOwn = snapshot.val().win;
         if (snapshot.child("name").exists()) {
@@ -282,6 +290,13 @@ $(document).ready(function () {
         }
     })
 
+    database.ref("/chat").on("child_added", function(childSnapshot) {
+        var trTag = $("<tr>").append(
+            $("<td>").text(childSnapshot.val().input)
+        )
+        $("#tbody").prepend(trTag);
+    })
+
     database.ref().on("child_removed", function (snapshot) {
         var buttonBack = "<a class='waves-effect waves-red white btn' style='color: black;'>JOIN</a>"
         $("#displayOwn").attr("style", "visibility: hidden");
@@ -290,6 +305,7 @@ $(document).ready(function () {
         $("#joinOwn").html(buttonBack);
         $("#player2").text("Waiting...")
         $("#joinOpp").html(buttonBack);
+        $("")
     })
 
     $("#infoClear").on("click", function () {
