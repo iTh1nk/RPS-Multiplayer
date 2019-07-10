@@ -32,6 +32,89 @@ var rpsRockOpp = "<img src='./assets/images/rock.png' class='imgRpsPlay'>";
 var rpsPaperOpp = "<img src='./assets/images/paper.png' class='imgRpsPlay'>";
 var rpsScissorOpp = "<img src='./assets/images/scissor.png' class='imgRpsPlay'>";
 
+var playDisplayOwn = function () {
+    $("#displayOwn").attr("style", "visibility: hidden");
+    $("#displayOwn0").html("Waiting for Player2 response...")
+}
+
+var playDisplayOpp = function () {
+    $("#displayOpp").attr("style", "visibility: hidden");
+    $("#displayOpp0").text("Waiting for Player1 response...")
+}
+
+var resultDisplayTiedRock = function () {
+    $("#playResult").html("Tied!");
+    $("#displayOwn0").html("");
+    $("#displayOpp0").html("");
+    database.ref("/player1").update({
+        rpsImg: rpsRockOwn,
+        spPlayCounter1: 0,
+    })
+    database.ref("/player2").update({
+        rpsImg: rpsRockOpp,
+        spPlayCounter2: 0,
+    })
+}
+
+var resultDisplayTiedPaper = function () {
+    $("#playResult").html("Tied!");
+    $("#displayOwn0").html("");
+    $("#displayOpp0").html("");
+    database.ref("/player1").update({
+        rpsImg: rpsPaperOwn,
+        spPlayCounter1: 0,
+    })
+    database.ref("/player2").update({
+        rpsImg: rpsPaperOpp,
+        spPlayCounter2: 0,
+    })
+}
+
+var resultDisplayTiedScissor = function () {
+    $("#playResult").html("Tied!");
+    $("#displayOwn0").html("");
+    $("#displayOpp0").html("");
+    database.ref("/player1").update({
+        rpsImg: rpsScissorOwn,
+        spPlayCounter1: 0,
+    })
+    database.ref("/player2").update({
+        rpsImg: rpsScissorOpp,
+        spPlayCounter2: 0,
+    })
+}
+
+var resultDisplayP1Won = function () {
+    $("#playResult").html("Player1 Won!");
+    $("#displayOwn0").html("");
+    $("#displayOpp0").html("");
+    winCounterOwn++;
+}
+
+var resultDisplayP2Won = function () {
+    $("#playResult").html("Player2 Won!");
+    $("#displayOwn0").html("");
+    $("#displayOpp0").html("");
+    winCounterOpp++;
+}
+
+var resetDisplay = function () {
+    var buttonBack = "<a class='waves-effect waves-red white btn' style='color: black;'>JOIN</a>"
+    $("#displayOwn").attr("style", "visibility: hidden");
+    $("#displayOpp").attr("style", "visibility: hidden");
+    $("#player1").text("Waiting...");
+    $("#joinOwn").html(buttonBack);
+    $("#player2").text("Waiting...");
+    $("#joinOpp").html(buttonBack);
+    $("#winCounter1").html("");
+    $("#winCounter2").html("");
+    $("#loseCounter1").html("");
+    $("#loseCounter2").html("");
+    $("#rpsPlayOwn").html("");
+    $("#rpsPlayOpp").html("");
+    $("#playResult").html("");
+}
+
 $(document).ready(function () {
 
     //Player1 join game
@@ -50,11 +133,7 @@ $(document).ready(function () {
             loss: 0,
             selector: 1,
         })
-
-
-
         $("#displayOwn").attr("style", "visibility: visible");
-
     })
     //Player2 join game
     $("#joinOpp").on("click", function (event) {
@@ -72,33 +151,26 @@ $(document).ready(function () {
             loss: 0,
             selector: 1,
         })
-
-
-
         $("#displayOpp").attr("style", "visibility: visible");
-
     })
 
     //Player1 play process choose
     $("#rockOwn").on("click", function () {
-        $("#displayOwn").attr("style", "visibility: hidden");
-        $("#displayOwn0").html("Waiting for Player2 response...")
+        playDisplayOwn();
         database.ref("/player1").update({
             spPlayCounter1: 1,
             rps: "rock",
         })
     })
     $("#paperOwn").on("click", function () {
-        $("#displayOwn").attr("style", "visibility: hidden");
-        $("#displayOwn0").text("Waiting for Player2 response...")
+        playDisplayOwn();
         database.ref("/player1").update({
             spPlayCounter1: 1,
             rps: "paper",
         })
     })
     $("#scissorOwn").on("click", function () {
-        $("#displayOwn").attr("style", "visibility: hidden");
-        $("#displayOwn0").text("Waiting for Player2 response...")
+        playDisplayOwn();
         database.ref("/player1").update({
             spPlayCounter1: 1,
             rps: "scissor",
@@ -106,24 +178,21 @@ $(document).ready(function () {
     })
     //Player2 play process choose
     $("#rockOpp").on("click", function () {
-        $("#displayOpp").attr("style", "visibility: hidden");
-        $("#displayOpp0").text("Waiting for Player1 response...")
+        playDisplayOpp();
         database.ref("/player2").update({
             spPlayCounter2: 1,
             rps: "rock",
         })
     })
     $("#paperOpp").on("click", function () {
-        $("#displayOpp").attr("style", "visibility: hidden");
-        $("#displayOpp0").text("Waiting for Player1 response...")
+        playDisplayOpp();
         database.ref("/player2").update({
             spPlayCounter2: 1,
             rps: "paper",
         })
     })
     $("#scissorOpp").on("click", function () {
-        $("#displayOpp").attr("style", "visibility: hidden");
-        $("#displayOpp0").text("Waiting for Player1 response...")
+        playDisplayOpp();
         database.ref("/player2").update({
             spPlayCounter2: 1,
             rps: "scissor",
@@ -172,22 +241,9 @@ $(document).ready(function () {
             var playedMarker2 = snapshot.val().player2.rps;
             //if else decide who won, lost, or tied
             if (playedMarker1 === "rock" && playedMarker2 === "rock") {
-                $("#playResult").html("Tied!");
-                $("#displayOwn0").html("");
-                $("#displayOpp0").html("");
-                database.ref("/player1").update({
-                    rpsImg: rpsRockOwn,
-                    spPlayCounter1: 0,
-                })
-                database.ref("/player2").update({
-                    rpsImg: rpsRockOpp,
-                    spPlayCounter2: 0,
-                })
+                resultDisplayTiedRock();
             } else if (playedMarker1 === "rock" && playedMarker2 === "paper") {
-                $("#playResult").html("Player2 Won!");
-                $("#displayOwn0").html("");
-                $("#displayOpp0").html("");
-                winCounterOpp++;
+                resultDisplayP2Won();
                 database.ref("/player1").update({
                     rpsImg: rpsRockOwn,
                     win: winCounterOwn,
@@ -201,10 +257,7 @@ $(document).ready(function () {
                     spPlayCounter2: 0,
                 })
             } else if (playedMarker1 === "rock" && playedMarker2 === "scissor") {
-                $("#playResult").html("Player1 Won!");
-                $("#displayOwn0").html("");
-                $("#displayOpp0").html("");
-                winCounterOwn++;
+                resultDisplayP1Won();
                 database.ref("/player1").update({
                     rpsImg: rpsRockOwn,
                     win: winCounterOwn,
@@ -218,22 +271,9 @@ $(document).ready(function () {
                     spPlayCounter2: 0,
                 })
             } else if (playedMarker1 === "paper" && playedMarker2 === "paper") {
-                $("#playResult").html("Tied!");
-                $("#displayOwn0").html("");
-                $("#displayOpp0").html("");
-                database.ref("/player1").update({
-                    rpsImg: rpsPaperOwn,
-                    spPlayCounter1: 0,
-                })
-                database.ref("/player2").update({
-                    rpsImg: rpsPaperOpp,
-                    spPlayCounter2: 0,
-                })
+                resultDisplayTiedPaper();
             } else if (playedMarker1 === "paper" && playedMarker2 === "scissor") {
-                $("#playResult").html("Player2 Won!");
-                $("#displayOwn0").html("");
-                $("#displayOpp0").html("");
-                winCounterOpp++;
+                resultDisplayP2Won();
                 database.ref("/player1").update({
                     rpsImg: rpsPaperOwn,
                     win: winCounterOwn,
@@ -247,22 +287,9 @@ $(document).ready(function () {
                     spPlayCounter2: 0,
                 })
             } else if (playedMarker1 === "scissor" && playedMarker2 === "scissor") {
-                $("#playResult").html("Tied!");
-                $("#displayOwn0").html("");
-                $("#displayOpp0").html("");
-                database.ref("/player1").update({
-                    rpsImg: rpsScissorOwn,
-                    spPlayCounter1: 0,
-                })
-                database.ref("/player2").update({
-                    rpsImg: rpsScissorOpp,
-                    spPlayCounter2: 0,
-                })
+                resultDisplayTiedScissor();
             } else if (playedMarker1 === "paper" && playedMarker2 === "rock") {
-                $("#playResult").html("Player1 Won!");
-                $("#displayOwn0").html("");
-                $("#displayOpp0").html("");
-                winCounterOwn++;
+                resultDisplayP1Won();
                 database.ref("/player1").update({
                     rpsImg: rpsPaperOwn,
                     win: winCounterOwn,
@@ -276,10 +303,7 @@ $(document).ready(function () {
                     spPlayCounter2: 0,
                 })
             } else if (playedMarker1 === "scissor" && playedMarker2 === "paper") {
-                $("#playResult").html("Player1 Won!");
-                $("#displayOwn0").html("");
-                $("#displayOpp0").html("");
-                winCounterOwn++;
+                resultDisplayP1Won();
                 database.ref("/player1").update({
                     rpsImg: rpsScissorOwn,
                     win: winCounterOwn,
@@ -293,10 +317,7 @@ $(document).ready(function () {
                     spPlayCounter2: 0,
                 })
             } else if (playedMarker1 === "scissor" && playedMarker2 === "rock") {
-                $("#playResult").html("Player2 Won!");
-                $("#displayOwn0").html("");
-                $("#displayOpp0").html("");
-                winCounterOpp++;
+                resultDisplayP2Won();
                 database.ref("/player1").update({
                     rpsImg: rpsScissorOwn,
                     win: winCounterOwn,
@@ -311,7 +332,6 @@ $(document).ready(function () {
                 })
             }
         }
-
     })
     //player1 firebase standby
     database.ref("/player1").on("value", function (snapshot) {
@@ -327,7 +347,6 @@ $(document).ready(function () {
             $("#winCounter1").html(snapshot.val().win)
             $("#loseCounter1").html(snapshot.val().loss)
         }
-
     })
     //player2 firebase stanby
     database.ref("/player2").on("value", function (snapshot) {
@@ -353,25 +372,19 @@ $(document).ready(function () {
     })
     //reset all html tag after database erased
     database.ref().on("child_removed", function (snapshot) {
-        var buttonBack = "<a class='waves-effect waves-red white btn' style='color: black;'>JOIN</a>"
-        $("#displayOwn").attr("style", "visibility: hidden");
-        $("#displayOpp").attr("style", "visibility: hidden");
-        $("#player1").text("Waiting...");
-        $("#joinOwn").html(buttonBack);
-        $("#player2").text("Waiting...");
-        $("#joinOpp").html(buttonBack);
-        $("#winCounter1").html("");
-        $("#winCounter2").html("");
-        $("#loseCounter1").html("");
-        $("#loseCounter2").html("");
-        $("#rpsPlayOwn").html("");
-        $("#rpsPlayOpp").html("");
-        $("#playResult").html("");
-        location.reload();
+        resetDisplay();
     })
     //eastern egg to erase whole firebase data
     $("#infoClear").on("click", function () {
-        database.ref().remove();
+        var promt = prompt("This page is about to reset? (Y/N)");
+        if (promt === "Y") {
+            location.reload();
+            database.ref().remove();
+        }
     })
 
+    window.onbeforeunload = function(event) {
+        console.log(event)
+        event.returnValue = "Reload page will lose play eligbility, still?";
+    };
 })
