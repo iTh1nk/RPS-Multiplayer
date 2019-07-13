@@ -375,16 +375,16 @@ $(document).ready(function () {
         resetDisplay();
     })
     //eastern egg to erase whole firebase data
-    $("#infoClear").on("click", function () {
-        var promt = prompt("This page is about to reset? (Y/N)");
+    $("#infoClearBtn").on("click", function () {
+        var promt = prompt("This page and database are about to reset? (Y/N)");
         if (promt === "Y") {
             location.reload();
             database.ref().remove();
         }
     })
-
-    window.onbeforeunload = function(event) {
-        console.log(event)
-        event.returnValue = "Reload page will lose play eligbility, still?";
-    };
+    //alert when user want to refresh page
+    // window.onbeforeunload = function(event) {
+    //     console.log(event)
+    //     event.returnValue = "Reload page will lose play eligbility, still?";
+    // };
 })
